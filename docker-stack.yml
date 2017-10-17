@@ -1,0 +1,57 @@
+version: "3"
+services:
+  app-back:
+    image: itwars/mygo
+    networks:
+      - mongo-go
+      - nginx-go
+    ports: 
+      - 3000:3000
+    depends_on:
+      - mongodb
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  nginx:
+    image: itwars/nginx-http2
+    volumes: 
+            - /home/vrh/docker/myrepo/stack-mongo-golang-vuejs-nginx/nginx-http2/conf/:/etc/nginx/conf.d/
+    ports:
+            - 80:80
+            - 443:443
+    networks: 
+            - nginx-go
+    depends_on:
+      - app-back
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  mongodb:
+    image: itwars/mongodb
+    volumes:
+            - mongodb-data:/data/db
+    networks:
+      - mongo-go
+    ports:
+            - 27017:27017
+            - 28017:28017
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+networks:
+  mongo-go:
+  nginx-go:
+volumes:
+  mongodb-data:
