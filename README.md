@@ -1,6 +1,6 @@
 # An example of Docker Stack deployment of a Golang RESTful API connected to MongoDB, behind an NGINX proxy
 
-![Itwars docker-golang-rest-mongodb-nginx](docker-multistage-build-HD.jpg)
+![Itwars docker-golang-rest-mongodb-nginx](rest-API-Golang-Mongo-docker.jpg)
 
 
 ## Introduction
